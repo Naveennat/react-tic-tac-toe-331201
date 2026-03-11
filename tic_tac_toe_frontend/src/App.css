@@ -1,104 +1,203 @@
-/* CSS Variables for Theme Management */
+/* Theme variables for Tic Tac Toe light, modern UI */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Style guide colors */
+  --color-primary: #3b82f6;   /* blue accent */
+  --color-accent: #06b6d4;    /* teal accent */
+  --color-background: #f9fafb;
+  --color-surface: #ffffff;
+  --color-text: #111827;
+  --color-board-border: #e5e7eb;
+  --color-x: #3b82f6;
+  --color-o: #06b6d4;
+  --color-draw: #64748b;
+  --color-shadow: rgba(55, 65, 81, 0.06);
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
-}
-
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Reset base background */
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+/* App background and centering */
+.ttt-app-bg {
+  display: flex;
   min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-background);
+}
+
+.ttt-main-container {
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  box-shadow: 0 8px 40px 0 var(--color-shadow);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  min-width: 320px;
+  max-width: 96vw;
+  width: 385px;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+.ttt-title {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.02em;
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+.ttt-status {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 1.1rem;
+  min-height: 2.1rem;
+}
+
+.player {
+  font-weight: 700;
+  padding: 0 0.1em;
+}
+
+.player-X {
+  color: var(--color-x);
+  text-shadow: 0 1px 2px var(--color-x);
+}
+.player-O {
+  color: var(--color-o);
+  text-shadow: 0 1px 2px var(--color-o);
+}
+.draw {
+  color: var(--color-draw);
+  font-weight: 700;
+  text-shadow: 0 1px 2px #e0e0e0;
+}
+
+.ttt-board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.3rem;
+}
+
+.ttt-board {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-rows: repeat(3, 64px);
+  gap: 9px;
+  background: var(--color-board-border);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px 0 var(--color-shadow);
+  padding: 8px;
+  margin-bottom: 0.6rem;
+}
+
+.ttt-square {
+  width: 64px;
+  height: 64px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2.5px solid var(--color-board-border);
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.16s, box-shadow 0.16s, background 0.24s;
+  outline: none;
+  position: relative;
+  user-select: none;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.ttt-square:hover,
+.ttt-square:focus {
+  border-color: var(--color-primary);
+  background: rgba(59, 130, 246, 0.07);
+  z-index: 1;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
+.ttt-square.highlight {
+  border-color: var(--color-accent);
+  background: rgba(6,182,212,.09);
+  box-shadow: 0 1px 6px var(--color-accent);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.ttt-square .player-X {
+  color: var(--color-x);
+}
+.ttt-square .player-O {
+  color: var(--color-o);
+}
+
+/* Larger font for filled squares */
+.ttt-square.X {
+  color: var(--color-x);
+}
+.ttt-square.O {
+  color: var(--color-o);
+}
+
+/* Restart Button */
+.ttt-restart-btn {
+  margin-top: 0.2rem;
+  background: linear-gradient(90deg, var(--color-primary) 60%, var(--color-accent) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.7em 2.1em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px 0 var(--color-shadow);
+  transition: background 0.15s, box-shadow 0.19s, filter 0.13s;
+}
+
+.ttt-restart-btn:hover,
+.ttt-restart-btn:focus {
+  filter: brightness(1.065);
+  box-shadow: 0 4px 13px 0 var(--color-primary);
+}
+
+.ttt-footer {
+  font-size: 0.98rem;
+  color: #64748b;
+  margin-top: 1.3rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .ttt-main-container {
+    padding: 1.2rem 0.45rem 1.2rem 0.45rem;
+    border-radius: 0;
+    box-shadow: none;
+    min-width: unset;
+    width: 100vw;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-board {
+    grid-template-columns: repeat(3, 18vw);
+    grid-template-rows: repeat(3, 18vw);
+    max-width: 98vw;
+    padding: 4vw;
+    margin-bottom: 1vw;
+    gap: 3vw;
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-square {
+    width: 18vw;
+    height: 18vw;
+    font-size: 2.6rem;
+  }
+  .ttt-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.2rem;
   }
 }
